@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fangdu | Developer Portfolio
 
-## Getting Started
+个人全栈开发者主页，基于 Next.js 16 + React 19 + Tailwind CSS 4 构建。
 
-First, run the development server:
+## 技术栈
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **框架**: Next.js 16.2.3 (App Router)
+- **UI**: React 19.2.4
+- **样式**: Tailwind CSS 4 + CSS Variables
+- **图标**: Lucide React
+- **字体**: Geist Sans + Geist Mono
+
+## 项目结构
+
+```
+src/
+├── app/
+│   ├── layout.tsx      # 根布局 (Navbar + Footer + Background)
+│   ├── page.tsx        # 首页 (Hero + WorksSection)
+│   └── globals.css     # 全局样式
+├── components/
+│   ├── Hero.tsx        # 主-hero 区域
+│   ├── WorksSection.tsx # 作品展示区
+│   ├── WorkCard.tsx    # 作品卡片组件
+│   ├── Navbar.tsx      # 导航栏
+│   ├── Footer.tsx      # 页脚
+│   ├── Background.tsx  # 动态背景容器
+│   ├── MatrixRain.tsx  # 矩阵雨效果
+│   ├── CyberGrid.tsx   # 赛博网格效果
+│   └── Icons.tsx       # 图标组件
+└── data/
+    └── works.ts        # 作品数据
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 快速开始
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# 安装依赖
+npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# 开发模式
+npm run dev
 
-## Learn More
+# 构建生产版本
+npm run build
 
-To learn more about Next.js, take a look at the following resources:
+# 生产预览
+npm run start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 页面功能
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Hero 区域**: 展示个人简介与定位
+- **作品展示**: 卡片式展示开源项目，支持 GitHub 链接和外部链接
+- **动态背景**: 矩阵雨 + 赛博网格视觉效果
+- **响应式设计**: 适配各种屏幕尺寸
 
-## Deploy on Vercel
+## 开发命令
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| 命令 | 描述 |
+|------|------|
+| `npm run dev` | 启动开发服务器 (http://localhost:3000) |
+| `npm run build` | 构建生产版本 |
+| `npm run start` | 启动生产服务器 |
+| `npm run lint` | 运行 ESLint 检查 |
