@@ -3,11 +3,7 @@
 import { useState, useEffect } from "react";
 import { MenuIcon, XIcon, GithubIcon } from "./Icons";
 
-const navLinks = [
-  { name: "Works", href: "#works" },
-  { name: "Blog", href: "#blog" },
-  { name: "About", href: "#about" },
-];
+const navLinks = [{ name: "Works", href: "#works" }];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +28,10 @@ export default function Navbar() {
       <nav className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <a href="#" className="text-xl font-bold text-gold hover:opacity-80 transition-opacity">
+          <a
+            href="#"
+            className="text-xl font-bold text-gold hover:opacity-80 transition-opacity"
+          >
             Fangdu
           </a>
 
@@ -48,7 +47,7 @@ export default function Navbar() {
               </a>
             ))}
             <a
-              href="https://github.com"
+              href="https://github.com/fangdown"
               target="_blank"
               rel="noopener noreferrer"
               className="text-foreground/80 hover:text-gold transition-colors duration-200"
@@ -82,7 +81,7 @@ export default function Navbar() {
                 </a>
               ))}
               <a
-                href="https://github.com"
+                href="https://github.com/fangdown"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-foreground/80 hover:text-gold transition-colors duration-200 flex items-center gap-2"
