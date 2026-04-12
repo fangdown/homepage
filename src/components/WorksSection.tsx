@@ -3,7 +3,6 @@ import WorkCard from "./WorkCard";
 
 export default function WorksSection() {
   const featuredWorks = works.filter((work) => work.featured);
-  const otherWorks = works.filter((work) => !work.featured);
 
   return (
     <section id="works" className="py-8 px-6">
@@ -19,20 +18,7 @@ export default function WorksSection() {
           ))}
         </div>
 
-        {/* Other Works */}
-        {otherWorks.length > 0 && (
-          <>
-            <h3 className="text-xl font-semibold mb-6 text-foreground/80">
-              Other Projects
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {otherWorks.map((work) => (
-                <WorkCard key={work.id} work={work} />
-              ))}
-            </div>
-          </>
-        )}
-      </div>
+              </div>
     </section>
   );
 }
