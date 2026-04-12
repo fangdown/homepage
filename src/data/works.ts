@@ -17,6 +17,7 @@ export const works: Work[] = [
     tags: ["vue3", "SSE", "虚拟列表"],
     githubUrl: "https://github.com/fangdown/chat-demo",
     externalUrl: "https://fangdown.github.io/chat-demo/",
+    featured: true,
   },
   {
     id: "nodejs-api",
@@ -24,6 +25,7 @@ export const works: Work[] = [
     description: "基于 Express + Node.js 的 RESTful API 服务示例",
     tags: ["nodejs", "express"],
     githubUrl: "https://github.com/fangdown/nodejs-demo-api",
+    featured: true,
   },
   {
     id: "demo-mediapipe",
