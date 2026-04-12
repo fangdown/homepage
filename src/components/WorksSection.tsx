@@ -6,7 +6,7 @@ export default function WorksSection() {
   const otherWorks = works.filter((work) => !work.featured);
 
   return (
-    <section id="works" className="py-16 px-6">
+    <section id="works" className="py-8 px-6">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl font-bold mb-8 text-foreground">
           Featured Works
