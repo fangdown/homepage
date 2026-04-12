@@ -10,6 +10,14 @@ export interface Work {
 
 export const works: Work[] = [
   {
+    id: "demo-mediapipe",
+    title: "MediaPipe Demo",
+    description: "使用 MediaPipe 实现实时人像分割与背景替换",
+    tags: ["MediaPipe", "webgl", "Vue"],
+    externalUrl: "https://fangdown.github.io/mediapipe-demo/",
+    featured: true,
+  },
+  {
     id: "1",
     title: "AI Code Assistant",
     description: "基于大语言模型的代码助手，支持多语言代码补全和解释",
