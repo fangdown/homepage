@@ -41,6 +41,8 @@ export const works: Work[] = [
     description:
       "基于 Vue 3 + Vite + ECharts 6，展示多种大数据量图表的渲染策略。",
     tags: ["Vue3", "Vite", "ECharts"],
+    githubUrl: "https://github.com/fangdown/echarts-demo",
+    externalUrl: "https://fangdown.github.io/echarts-demo/",
     featured: true,
   },
 ];
