@@ -35,4 +35,12 @@ export const works: Work[] = [
     externalUrl: "https://fangdown.github.io/mediapipe-demo/",
     featured: true,
   },
+  {
+    id: "echarts-bigdata",
+    title: "ECharts 大数据渲染示例",
+    description:
+      "基于 Vue 3 + Vite + ECharts 6，展示多种大数据量图表的渲染策略。",
+    tags: ["Vue3", "Vite", "ECharts"],
+    featured: true,
+  },
 ];
