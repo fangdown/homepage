@@ -53,5 +53,6 @@ export const works: Work[] = [
     tags: ["React", "Zustand", "Tailwind", "TypeScript", "playwright"],
     githubUrl: "https://github.com/fangdown/drag-demo",
     externalUrl: "https://fangdown.github.io/drag-demo/",
+    featured: true,
   },
 ];
