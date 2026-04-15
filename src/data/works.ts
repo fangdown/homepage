@@ -45,4 +45,13 @@ export const works: Work[] = [
     externalUrl: "https://fangdown.github.io/echarts-demo/",
     featured: true,
   },
+  {
+    id: "drag-demo",
+    title: "拖拽式页面构建器",
+    description:
+      "一个可视化的拖拽式页面构建器，使用 React + TypeScript + Zustand + Tailwind CSS 构建。",
+    tags: ["React", "Zustand", "Tailwind", "TypeScript", "playwright"],
+    githubUrl: "https://github.com/fangdown/drag-demo",
+    externalUrl: "https://fangdown.github.io/drag-demo/",
+  },
 ];
