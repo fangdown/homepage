@@ -4,7 +4,10 @@ import { useState, useEffect } from "react";
 import { MenuIcon, XIcon, GithubIcon, GoogleIcon } from "./Icons";
 import { signInWithGoogle, signOut, onAuthStateChange, getCurrentUser, User } from "@/lib/auth";
 
-const navLinks = [{ name: "Works", href: "#works" }];
+const navLinks = [
+  { name: "Works", href: "/#works" },
+  { name: "Courses", href: "/courses" },
+];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,7 +66,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <a
-            href="#"
+            href="/"
             className="text-xl font-bold text-gold hover:opacity-80 transition-opacity"
           >
             Fangdu
