@@ -1,13 +1,31 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { MenuIcon, XIcon, GithubIcon } from "./Icons";
+import { MenuIcon, XIcon, GithubIcon, GoogleIcon } from "./Icons";
+import { signInWithGoogle, signOut, onAuthStateChange, getCurrentUser, User } from "@/lib/auth";
 
 const navLinks = [{ name: "Works", href: "#works" }];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // 初始检查已有 session
+    getCurrentUser().then((user) => {
+      setUser(user)
+      setIsLoading(false)
+    })
+
+    // 监听状态变化
+    const { data: { subscription } } = onAuthStateChange((user) => {
+      setUser(user)
+      setIsLoading(false)
+    })
+    return () => subscription.unsubscribe()
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,6 +34,22 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleSignIn = async () => {
+    try {
+      await signInWithGoogle()
+    } catch (error) {
+      console.error('Sign in failed:', error)
+    }
+  }
+
+  const handleSignOut = async () => {
+    try {
+      await signOut()
+    } catch (error) {
+      console.error('Sign out failed:', error)
+    }
+  }
 
   return (
     <header
@@ -54,6 +88,34 @@ export default function Navbar() {
             >
               <GithubIcon size={20} />
             </a>
+
+            {/* Auth Section */}
+            {isLoading ? (
+              <div className="w-8 h-8" />
+            ) : user ? (
+              <div className="flex items-center gap-3">
+                <img
+                  src={user.avatar_url || "https://www.gravatar.com/avatar/"}
+                  alt={user.name || "User"}
+                  className="w-8 h-8 rounded-full border border-border"
+                />
+                <span className="text-sm text-foreground/80">{user.name || user.email}</span>
+                <button
+                  onClick={handleSignOut}
+                  className="text-xs text-foreground/50 hover:text-foreground/80 transition-colors"
+                >
+                  退出
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={handleSignIn}
+                className="flex items-center gap-2 px-4 py-2 bg-white text-gray-700 rounded-full border border-gray-200 hover:bg-gray-50 transition-colors text-sm font-medium"
+              >
+                <GoogleIcon size={18} />
+                登录
+              </button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -89,6 +151,36 @@ export default function Navbar() {
                 <GithubIcon size={20} />
                 GitHub
               </a>
+
+              {/* Mobile Auth */}
+              {isLoading ? (
+                <div className="w-8 h-8" />
+              ) : user ? (
+                <div className="flex items-center gap-3 pt-4 border-t border-border">
+                  <img
+                    src={user.avatar_url || "https://www.gravatar.com/avatar/"}
+                    alt={user.name || "User"}
+                    className="w-10 h-10 rounded-full border border-border"
+                  />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-foreground">{user.name || user.email}</p>
+                    <button
+                      onClick={handleSignOut}
+                      className="text-xs text-foreground/50 hover:text-foreground/80"
+                    >
+                      退出登录
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={handleSignIn}
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-gray-700 rounded-full border border-gray-200 hover:bg-gray-50 transition-colors text-sm font-medium mt-4 pt-4 border-t border-border"
+                >
+                  <GoogleIcon size={18} />
+                  使用 Google 登录
+                </button>
+              )}
             </div>
           </div>
         )}
