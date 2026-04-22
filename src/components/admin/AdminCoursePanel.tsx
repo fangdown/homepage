@@ -38,6 +38,7 @@ function courseToForm(c: Course): CourseInput {
 export default function AdminCoursePanel() {
   const [courses, setCourses] = useState<Course[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [listError, setListError] = useState<string | null>(null)
   const [showModal, setShowModal] = useState(false)
   const [editing, setEditing] = useState<Course | null>(null)
   const [formData, setFormData] = useState<CourseInput>(emptyForm)
@@ -46,12 +47,14 @@ export default function AdminCoursePanel() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   async function loadCourses() {
+    setListError(null)
     setIsLoading(true)
     try {
       const data = await listCoursesAction()
       setCourses(data)
     } catch (e) {
       console.error(e)
+      setListError('课程列表加载失败，请检查网络或 Supabase 配置后重试。')
     } finally {
       setIsLoading(false)
     }
@@ -151,7 +154,18 @@ export default function AdminCoursePanel() {
         </button>
       </div>
 
-      {isLoading ? (
+      {listError ? (
+        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-4 text-center">
+          <p className="text-sm text-red-700">{listError}</p>
+          <button
+            type="button"
+            onClick={() => void loadCourses()}
+            className="mt-3 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-800 hover:bg-gray-50"
+          >
+            重试
+          </button>
+        </div>
+      ) : isLoading ? (
         <div className="flex items-center justify-center py-12">
           <div className="animate-spin h-8 w-8 border-4 border-black border-t-transparent rounded-full" />
           <span className="ml-3 text-gray-500">加载中...</span>

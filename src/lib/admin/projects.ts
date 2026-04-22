@@ -41,11 +41,14 @@ export async function validateProjectForUpdate(
   return { success: true }
 }
 
+const PROJECTS_LIST_LIMIT = 200
+
 export async function getProjects(): Promise<Project[]> {
   const { data, error } = await supabaseAdmin
     .from('projects')
     .select('*')
     .order('created_at', { ascending: false })
+    .limit(PROJECTS_LIST_LIMIT)
 
   if (error) throw error
   return data || []

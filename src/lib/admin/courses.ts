@@ -80,12 +80,15 @@ function rowFromDb(row: Record<string, unknown>): Course {
   }
 }
 
+const COURSES_LIST_LIMIT = 100
+
 export async function getCourses(): Promise<Course[]> {
   const { data, error } = await supabaseAdmin
     .from('courses')
     .select('*')
     .order('sort_order', { ascending: false })
     .order('created_at', { ascending: false })
+    .limit(COURSES_LIST_LIMIT)
 
   if (error) throw error
   return (data ?? []).map((r) => rowFromDb(r as Record<string, unknown>))

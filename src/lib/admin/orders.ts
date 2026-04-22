@@ -41,11 +41,14 @@ function rowFromDb(row: Record<string, unknown>): Order {
   }
 }
 
+const ORDERS_LIST_LIMIT = 300
+
 export async function getOrders(): Promise<Order[]> {
   const { data, error } = await supabaseAdmin
     .from('orders')
     .select('*')
     .order('created_at', { ascending: false })
+    .limit(ORDERS_LIST_LIMIT)
 
   if (error) throw error
   return (data ?? []).map((r) => rowFromDb(r as Record<string, unknown>))

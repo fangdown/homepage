@@ -1,9 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { validatePassword } from '@/lib/admin/auth'
 import { Project, ProjectInput } from '@/lib/admin/projects'
-import { listProjectsAction, addProjectAction, editProjectAction, removeProjectAction } from '@/app/actions'
+import {
+  loginAdminAction,
+  listProjectsAction,
+  addProjectAction,
+  editProjectAction,
+  removeProjectAction,
+} from '@/app/actions'
 import AdminCoursePanel from '@/components/admin/AdminCoursePanel'
 import AdminOrdersPanel from '@/components/admin/AdminOrdersPanel'
 
@@ -37,7 +42,7 @@ export default function AdminPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    const result = await validatePassword(password)
+    const result = await loginAdminAction(password)
     if (result.success) {
       setIsAuthenticated(true)
       setError('')

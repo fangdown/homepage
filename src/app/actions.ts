@@ -1,5 +1,6 @@
 'use server'
 
+import { validatePassword } from '@/lib/admin/auth'
 import {
   createProject,
   getProjects,
@@ -21,6 +22,10 @@ import {
   Course,
 } from '@/lib/admin/courses'
 import { getOrders, type Order } from '@/lib/admin/orders'
+
+export async function loginAdminAction(password: string) {
+  return validatePassword(password)
+}
 
 export async function listProjectsAction(): Promise<Project[]> {
   return getProjects()

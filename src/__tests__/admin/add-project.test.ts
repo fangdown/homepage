@@ -29,7 +29,7 @@ describe('添加作品 - 验证规则', () => {
     expect(result.error).toBe('标题不能为空')
   })
 
-  it('重复标题：应该报错"标题已存在"', async () => {
+  it('非空标题：校验通过（重复标题由数据库唯一约束在保存时报错）', async () => {
     const data = {
       title: '已存在的作品',
       description: '这是一个很棒的作品',
@@ -39,7 +39,6 @@ describe('添加作品 - 验证规则', () => {
 
     const result = await validateProject(data)
 
-    expect(result.success).toBe(false)
-    expect(result.error).toBe('标题已存在')
+    expect(result.success).toBe(true)
   })
 })

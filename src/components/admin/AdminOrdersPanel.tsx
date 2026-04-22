@@ -33,17 +33,30 @@ export default function AdminOrdersPanel() {
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
+  const [listError, setListError] = useState<string | null>(null)
 
   const loadOrders = useCallback(async (opts?: { silent?: boolean }) => {
-    if (opts?.silent) setRefreshing(true)
+    if (opts?.silent) {
+      setRefreshing(true)
+    } else {
+      setListError(null)
+      setLoading(true)
+    }
     try {
       const data = await listOrdersAction()
       setOrders(data)
+      setListError(null)
     } catch (e) {
       console.error(e)
+      if (!opts?.silent) {
+        setListError('订单列表加载失败，请检查网络或数据库迁移是否已执行。')
+      }
     } finally {
-      if (opts?.silent) setRefreshing(false)
-      setLoading(false)
+      if (opts?.silent) {
+        setRefreshing(false)
+      } else {
+        setLoading(false)
+      }
     }
   }, [])
 
@@ -72,6 +85,21 @@ export default function AdminOrdersPanel() {
       <div className="flex items-center justify-center py-12">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-black border-t-transparent" />
         <span className="ml-3 text-gray-500">加载订单...</span>
+      </div>
+    )
+  }
+
+  if (listError) {
+    return (
+      <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-4 text-center">
+        <p className="text-sm text-red-700">{listError}</p>
+        <button
+          type="button"
+          onClick={() => void loadOrders()}
+          className="mt-3 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-800 hover:bg-gray-50"
+        >
+          重试
+        </button>
       </div>
     )
   }
