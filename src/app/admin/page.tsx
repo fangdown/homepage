@@ -5,6 +5,7 @@ import { validatePassword } from '@/lib/admin/auth'
 import { Project, ProjectInput } from '@/lib/admin/projects'
 import { listProjectsAction, addProjectAction, editProjectAction, removeProjectAction } from '@/app/actions'
 import AdminCoursePanel from '@/components/admin/AdminCoursePanel'
+import AdminOrdersPanel from '@/components/admin/AdminOrdersPanel'
 
 interface ProjectFormData {
   title: string
@@ -32,7 +33,7 @@ export default function AdminPage() {
   const [formData, setFormData] = useState<ProjectFormData>(emptyForm)
   const [formError, setFormError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [adminTab, setAdminTab] = useState<'projects' | 'courses'>('projects')
+  const [adminTab, setAdminTab] = useState<'projects' | 'courses' | 'orders'>('projects')
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -195,6 +196,17 @@ export default function AdminPage() {
           >
             课程
           </button>
+          <button
+            type="button"
+            onClick={() => setAdminTab('orders')}
+            className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors ${
+              adminTab === 'orders'
+                ? 'border-black text-gray-900'
+                : 'border-transparent text-gray-500 hover:text-gray-800'
+            }`}
+          >
+            订单
+          </button>
         </div>
 
         {adminTab === 'projects' && (
@@ -263,11 +275,12 @@ export default function AdminPage() {
           </section>
         )}
 
-        {/* 订单列表 */}
-        <section>
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">订单</h2>
-          <p className="text-gray-400">暂无订单</p>
-        </section>
+        {adminTab === 'orders' && (
+          <section className="mb-8">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">订单</h2>
+            <AdminOrdersPanel />
+          </section>
+        )}
       </div>
 
       {/* Modal */}

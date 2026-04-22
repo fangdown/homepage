@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Course } from "@/lib/admin/courses";
 import { XIcon } from "@/components/Icons";
+import { payRequestHeaders } from "@/lib/pay/pay-client";
 
 function CreditCardIcon({ className }: { className?: string }) {
   return (
@@ -23,6 +24,8 @@ function SharePayIcon({ className }: { className?: string }) {
   );
 }
 
+type PayChannel = "alipay" | "wxpay";
+
 export default function OrderConfirmModal({
   open,
   onClose,
@@ -32,16 +35,38 @@ export default function OrderConfirmModal({
   onClose: () => void;
   course: Course;
 }) {
-  const [confirmed, setConfirmed] = useState(false);
+  const [payType, setPayType] = useState<PayChannel>("alipay");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   if (!open) return null;
 
-  function handleConfirm() {
-    setConfirmed(true);
-    setTimeout(() => {
-      setConfirmed(false);
-      onClose();
-    }, 400);
+  async function handleConfirm() {
+    setError("");
+    setLoading(true);
+    try {
+      const headers = await payRequestHeaders();
+      const res = await fetch("/api/pay/zpay/create", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ courseId: course.id, type: payType }),
+      });
+      const data = (await res.json()) as { payUrl?: string; error?: string };
+      if (!res.ok) {
+        setError(data.error || "无法发起支付");
+        setLoading(false);
+        return;
+      }
+      if (!data.payUrl) {
+        setError("未返回支付地址");
+        setLoading(false);
+        return;
+      }
+      window.location.href = data.payUrl;
+    } catch {
+      setError("网络错误，请重试");
+      setLoading(false);
+    }
   }
 
   return (
@@ -79,34 +104,61 @@ export default function OrderConfirmModal({
         </div>
 
         <p className="mb-2 text-sm text-white/70">支付方式</p>
-        <button
-          type="button"
-          className="mb-8 w-full rounded-lg border border-gold/80 bg-transparent py-2.5 text-sm font-medium text-gold"
-        >
-          支付宝
-        </button>
+        <div className="mb-6 grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={() => setPayType("alipay")}
+            className={`rounded-lg border py-2.5 text-sm font-medium transition ${
+              payType === "alipay"
+                ? "border-gold/80 text-gold"
+                : "border-white/15 text-white/50 hover:border-white/30"
+            }`}
+          >
+            支付宝
+          </button>
+          <button
+            type="button"
+            onClick={() => setPayType("wxpay")}
+            className={`rounded-lg border py-2.5 text-sm font-medium transition ${
+              payType === "wxpay"
+                ? "border-gold/80 text-gold"
+                : "border-white/15 text-white/50 hover:border-white/30"
+            }`}
+          >
+            微信支付
+          </button>
+        </div>
+
+        {error && (
+          <p className="mb-4 rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-200">
+            {error}
+          </p>
+        )}
 
         <div className="flex gap-3">
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 rounded-xl border border-white/15 bg-transparent py-3 text-sm font-medium text-white/70 transition hover:bg-white/5"
+            disabled={loading}
+            className="flex-1 rounded-xl border border-white/15 bg-transparent py-3 text-sm font-medium text-white/70 transition hover:bg-white/5 disabled:opacity-50"
           >
             取消
           </button>
           <button
             type="button"
             onClick={handleConfirm}
-            disabled={confirmed}
+            disabled={loading}
             className="flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white
             bg-gradient-to-r from-[#00ff88] to-[#a855f7] disabled:opacity-60"
           >
             <SharePayIcon className="h-4 w-4" />
-            {confirmed ? "已确认（演示）" : "确认支付"}
+            {loading ? "跳转中…" : "确认支付"}
           </button>
         </div>
 
-        <p className="mt-4 text-center text-xs text-white/35">演示环境，不会发起真实扣款。</p>
+        <p className="mt-4 text-center text-xs text-white/35">
+          将跳转至 Z-Pay 收银台完成付款；支付成功后订单会自动标记为已支付。
+        </p>
       </div>
     </div>
   );

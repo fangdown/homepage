@@ -20,6 +20,7 @@ import {
   CourseInput,
   Course,
 } from '@/lib/admin/courses'
+import { getOrders, type Order } from '@/lib/admin/orders'
 
 export async function listProjectsAction(): Promise<Project[]> {
   return getProjects()
@@ -109,4 +110,8 @@ export async function removeCourseAction(id: string): Promise<{ success?: boolea
   } catch {
     return { error: '删除失败' }
   }
+}
+
+export async function listOrdersAction(): Promise<Order[]> {
+  return getOrders()
 }
