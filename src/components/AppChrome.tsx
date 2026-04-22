@@ -16,7 +16,7 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
       <main
         className={
           isAdmin
-            ? 'flex-1 min-h-screen bg-white text-gray-900 antialiased'
+            ? 'flex-1 min-h-screen bg-white text-gray-900 antialiased pt-20'
             : 'flex-1'
         }
       >

@@ -3,6 +3,9 @@ import { markOrderPaidFromNotify } from '@/lib/admin/orders'
 import { getZpayKey, isZpayConfigured } from '@/lib/zpay/config'
 import { zpayVerify } from '@/lib/zpay/sign'
 
+/** Z-Pay 会反复重试 notify；禁用缓存，避免 GET 被 CDN 误缓存成固定响应 */
+export const dynamic = 'force-dynamic'
+
 function collectParams(req: NextRequest): Record<string, string> {
   const out: Record<string, string> = {}
   req.nextUrl.searchParams.forEach((v, k) => {
@@ -44,6 +47,10 @@ async function handleNotify(params: Record<string, string>): Promise<Response> {
 
   const key = getZpayKey()!
   if (!zpayVerify(params, key)) {
+    console.warn('[zpay/notify] sign verify failed', {
+      out_trade_no: params.out_trade_no,
+      keys: Object.keys(params).sort().join(','),
+    })
     return new Response('fail', { status: 400, ...plain })
   }
 
@@ -64,6 +71,12 @@ async function handleNotify(params: Record<string, string>): Promise<Response> {
   })
 
   if (result === 'missing' || result === 'money_mismatch' || result === 'db_error') {
+    console.warn('[zpay/notify] mark paid failed', {
+      result,
+      out_trade_no,
+      notifyMoney: params.money,
+      trade_no: params.trade_no,
+    })
     return new Response('fail', { status: 400, ...plain })
   }
 

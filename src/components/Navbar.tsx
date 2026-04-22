@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { MenuIcon, XIcon, GithubIcon, GoogleIcon } from "./Icons";
 import { signInWithGoogle, signOut, onAuthStateChange, getCurrentUser, User } from "@/lib/auth";
 
@@ -10,6 +11,8 @@ const navLinks = [
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const isAdmin = pathname?.startsWith("/admin") ?? false;
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState<User | null>(null);
@@ -54,20 +57,35 @@ export default function Navbar() {
     }
   }
 
+  const headerShell = isAdmin
+    ? scrolled
+      ? "bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm"
+      : "bg-white border-b border-gray-200"
+    : scrolled
+      ? "bg-background/90 backdrop-blur-md border-b border-border/50"
+      : "bg-transparent border-b border-transparent";
+
+  const linkMuted = isAdmin
+    ? "text-gray-600 hover:text-gray-900 transition-colors duration-200"
+    : "text-foreground/80 hover:text-gold transition-colors duration-200";
+  const linkQuiet = isAdmin
+    ? "text-gray-500 hover:text-gray-800 transition-colors"
+    : "text-foreground/50 hover:text-foreground/80 transition-colors";
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-background/90 backdrop-blur-md border-b border-border/50"
-          : "bg-transparent border-b border-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${headerShell}`}
     >
       <nav className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <a
             href="/"
-            className="text-xl font-bold text-gold hover:opacity-80 transition-opacity"
+            className={
+              isAdmin
+                ? "text-xl font-bold text-gray-900 hover:text-gray-600 transition-colors"
+                : "text-xl font-bold text-gold hover:opacity-80 transition-opacity"
+            }
           >
             Fangdu
           </a>
@@ -78,7 +96,7 @@ export default function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-foreground/80 hover:text-gold transition-colors duration-200"
+                className={linkMuted}
               >
                 {link.name}
               </a>
@@ -87,7 +105,7 @@ export default function Navbar() {
               href="https://github.com/fangdown"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-foreground/80 hover:text-gold transition-colors duration-200"
+              className={linkMuted}
             >
               <GithubIcon size={20} />
             </a>
@@ -100,12 +118,18 @@ export default function Navbar() {
                 <img
                   src={user.avatar_url || "https://www.gravatar.com/avatar/"}
                   alt={user.name || "User"}
-                  className="w-8 h-8 rounded-full border border-border"
+                  className={
+                    isAdmin
+                      ? "w-8 h-8 rounded-full border border-gray-200"
+                      : "w-8 h-8 rounded-full border border-border"
+                  }
                 />
-                <span className="text-sm text-foreground/80">{user.name || user.email}</span>
+                <span className={isAdmin ? "text-sm text-gray-700" : "text-sm text-foreground/80"}>
+                  {user.name || user.email}
+                </span>
                 <button
                   onClick={handleSignOut}
-                  className="text-xs text-foreground/50 hover:text-foreground/80 transition-colors"
+                  className={`text-xs ${linkQuiet}`}
                 >
                   退出
                 </button>
@@ -124,7 +148,11 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-foreground hover:text-gold transition-colors"
+            className={
+              isAdmin
+                ? "md:hidden text-gray-700 hover:text-gray-900 transition-colors"
+                : "md:hidden text-foreground hover:text-gold transition-colors"
+            }
             aria-label="Toggle menu"
           >
             {isOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
@@ -133,14 +161,20 @@ export default function Navbar() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t border-border pt-4">
+          <div
+            className={
+              isAdmin
+                ? "md:hidden mt-4 pb-4 border-t border-gray-200 pt-4"
+                : "md:hidden mt-4 pb-4 border-t border-border pt-4"
+            }
+          >
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="text-foreground/80 hover:text-gold transition-colors duration-200"
+                  className={linkMuted}
                 >
                   {link.name}
                 </a>
@@ -149,7 +183,7 @@ export default function Navbar() {
                 href="https://github.com/fangdown"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-foreground/80 hover:text-gold transition-colors duration-200 flex items-center gap-2"
+                className={`${linkMuted} flex items-center gap-2`}
               >
                 <GithubIcon size={20} />
                 GitHub
@@ -159,17 +193,35 @@ export default function Navbar() {
               {isLoading ? (
                 <div className="w-8 h-8" />
               ) : user ? (
-                <div className="flex items-center gap-3 pt-4 border-t border-border">
+                <div
+                  className={
+                    isAdmin
+                      ? "flex items-center gap-3 pt-4 border-t border-gray-200"
+                      : "flex items-center gap-3 pt-4 border-t border-border"
+                  }
+                >
                   <img
                     src={user.avatar_url || "https://www.gravatar.com/avatar/"}
                     alt={user.name || "User"}
-                    className="w-10 h-10 rounded-full border border-border"
+                    className={
+                      isAdmin
+                        ? "w-10 h-10 rounded-full border border-gray-200"
+                        : "w-10 h-10 rounded-full border border-border"
+                    }
                   />
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-foreground">{user.name || user.email}</p>
+                    <p
+                      className={
+                        isAdmin
+                          ? "text-sm font-medium text-gray-900"
+                          : "text-sm font-medium text-foreground"
+                      }
+                    >
+                      {user.name || user.email}
+                    </p>
                     <button
                       onClick={handleSignOut}
-                      className="text-xs text-foreground/50 hover:text-foreground/80"
+                      className={`text-xs ${linkQuiet}`}
                     >
                       退出登录
                     </button>
@@ -178,7 +230,11 @@ export default function Navbar() {
               ) : (
                 <button
                   onClick={handleSignIn}
-                  className="flex items-center gap-2 px-4 py-2 bg-white text-gray-700 rounded-full border border-gray-200 hover:bg-gray-50 transition-colors text-sm font-medium mt-4 pt-4 border-t border-border"
+                  className={
+                    isAdmin
+                      ? "flex items-center gap-2 px-4 py-2 bg-gray-50 text-gray-800 rounded-full border border-gray-200 hover:bg-gray-100 transition-colors text-sm font-medium mt-4 pt-4 border-t border-gray-200"
+                      : "flex items-center gap-2 px-4 py-2 bg-white text-gray-700 rounded-full border border-gray-200 hover:bg-gray-50 transition-colors text-sm font-medium mt-4 pt-4 border-t border-border"
+                  }
                 >
                   <GoogleIcon size={18} />
                   使用 Google 登录
