@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MenuIcon, XIcon, GithubIcon, GoogleIcon } from "./Icons";
 import { signInWithGoogle, signOut, onAuthStateChange, getCurrentUser, User } from "@/lib/auth";
@@ -79,7 +81,7 @@ export default function Navbar() {
       <nav className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <a
+          <Link
             href="/"
             className={
               isAdmin
@@ -88,18 +90,18 @@ export default function Navbar() {
             }
           >
             Fangdu
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
                 href={link.href}
                 className={linkMuted}
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
             <a
               href="https://github.com/fangdown"
@@ -115,13 +117,15 @@ export default function Navbar() {
               <div className="w-8 h-8" />
             ) : user ? (
               <div className="flex items-center gap-3">
-                <img
-                  src={user.avatar_url || "https://www.gravatar.com/avatar/"}
+                <Image
+                  src={user.avatar_url || "https://www.gravatar.com/avatar/?d=mp"}
                   alt={user.name || "User"}
+                  width={32}
+                  height={32}
                   className={
                     isAdmin
-                      ? "w-8 h-8 rounded-full border border-gray-200"
-                      : "w-8 h-8 rounded-full border border-border"
+                      ? "h-8 w-8 rounded-full border border-gray-200 object-cover"
+                      : "h-8 w-8 rounded-full border border-border object-cover"
                   }
                 />
                 <span className={isAdmin ? "text-sm text-gray-700" : "text-sm text-foreground/80"}>
@@ -170,14 +174,14 @@ export default function Navbar() {
           >
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
                   className={linkMuted}
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
               <a
                 href="https://github.com/fangdown"
@@ -200,13 +204,15 @@ export default function Navbar() {
                       : "flex items-center gap-3 pt-4 border-t border-border"
                   }
                 >
-                  <img
-                    src={user.avatar_url || "https://www.gravatar.com/avatar/"}
+                  <Image
+                    src={user.avatar_url || "https://www.gravatar.com/avatar/?d=mp"}
                     alt={user.name || "User"}
+                    width={40}
+                    height={40}
                     className={
                       isAdmin
-                        ? "w-10 h-10 rounded-full border border-gray-200"
-                        : "w-10 h-10 rounded-full border border-border"
+                        ? "h-10 w-10 rounded-full border border-gray-200 object-cover"
+                        : "h-10 w-10 rounded-full border border-border object-cover"
                     }
                   />
                   <div className="flex-1">
