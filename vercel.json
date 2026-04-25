@@ -7,6 +7,14 @@
     {
       "source": "/rga-nuxt/:path*",
       "destination": "https://zsk-rga-nuxt-demo.vercel.app/rga-nuxt/:path*"
+    },
+    {
+      "source": "/shangtang",
+      "destination": "https://gw-shangtang-demo.vercel.app/shangtang"
+    },
+    {
+      "source": "/shangtang/:path*",
+      "destination": "https://gw-shangtang-demo.vercel.app/shangtang/:path*"
     }
   ]
 }
