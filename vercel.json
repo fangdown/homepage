@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/rga-nuxt",
+      "destination": "https://zzsk-rga-nuxt-demo.vercel.app"
+    },
+    {
       "source": "/rga-nuxt/:path*",
       "destination": "https://zsk-rga-nuxt-demo.vercel.app/:path*"
     }
