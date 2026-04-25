@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/rga-nuxt",
-      "destination": "https://zsk-rga-nuxt-demo.vercel.app"
+      "destination": "https://zsk-rga-nuxt-demo.vercel.app/rga-nuxt"
     },
     {
       "source": "/rga-nuxt/:path*",
-      "destination": "https://zsk-rga-nuxt-demo.vercel.app/:path*"
+      "destination": "https://zsk-rga-nuxt-demo.vercel.app/rga-nuxt/:path*"
     }
   ]
 }
