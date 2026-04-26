@@ -15,6 +15,14 @@
     {
       "source": "/shangtang/:path*",
       "destination": "https://gw-shangtang-demo.vercel.app/shangtang/:path*"
+    },
+    {
+      "source": "/minimaxi-demo",
+      "destination": "https://minimaxi-demo.vercel.app/minimaxi-demo"
+    },
+    {
+      "source": "/minimaxi-demo/:path*",
+      "destination": "https://minimaxi-demo.vercel.app/minimaxi-demo/:path*"
     }
   ]
 }
