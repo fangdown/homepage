@@ -18,7 +18,20 @@
       "Bash(git add:*)",
       "Bash(git commit -m ':*)",
       "Bash(git push:*)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(npx vitest *)",
+      "Bash(curl -s -X GET \"https://xwogpzdtpivkunlpvjfl.supabase.co/rest/v1/projects?select=*&limit=1\" -H \"apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3b2dwemR0cGl2a3VubHB2amZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2Nzg1OTgsImV4cCI6MjA5MjI1NDU5OH0.-k2E3CWqeuA3Y15_WOv60S3pIyeiyzSiTLy9LCEb8fc\" -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3b2dwemR0cGl2a3VubHB2amZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2Nzg1OTgsImV4cCI6MjA5MjI1NDU5OH0.-k2E3CWqeuA3Y15_WOv60S3pIyeiyzSiTLy9LCEb8fc\")",
+      "Bash(curl -s -X GET \"https://xwogpzdtpivkunlpvjfl.supabase.co/rest/v1/projects?select=*\" -H \"apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3b2dwemR0cGl2a3VubHB2amZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2Nzg1OTgsImV4cCI6MjA5MjI1NDU5OH0.-k2E3CWqeuA3Y15_WOv60S3pIyeiyzSiTLy9LCEb8fc\")",
+      "Bash(curl -s \"http://localhost:3000/api/projects\")",
+      "Bash(npx tsx *)",
+      "Bash(npx dotenv *)",
+      "Bash(SUPABASE_SERVICE_ROLE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3b2dwemR0cGl2a3VubHB2amZsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NjY3ODU5OCwiZXhwIjoyMDkyMjU0NTk4fQ.85k9OJi_i2Ms7IXzs394hklbkL3vWTtYMOfwD_wgnfQ' SUPABASE_URL='https://xwogpzdtpivkunlpvjfl.supabase.co' npx tsx scripts/migrate-works.ts)",
+      "Bash(npx tsc *)",
+      "Bash(npx next *)",
+      "Bash(pnpm add *)",
+      "Bash(pnpm build *)",
+      "mcp__plugin_everything-claude-code_context7__resolve-library-id",
+      "mcp__plugin_everything-claude-code_context7__query-docs"
     ]
   }
 }
