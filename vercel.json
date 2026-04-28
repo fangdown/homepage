@@ -23,6 +23,14 @@
     {
       "source": "/minimaxi-demo/:path*",
       "destination": "https://minimaxi-demo.vercel.app/minimaxi-demo/:path*"
+    },
+    {
+      "source": "/react-nestjs-demo",
+      "destination": "https://react-nestjs-demo.vercel.app/react-nestjs-demo"
+    },
+    {
+      "source": "/react-nestjs-demo/:path*",
+      "destination": "https://react-nestjs-demo.vercel.app/react-nestjs-demo/:path*"
     }
   ]
 }
