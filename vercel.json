@@ -31,6 +31,14 @@
     {
       "source": "/nestjs-reading/:path*",
       "destination": "https://react-nestjs-demo.vercel.app/nestjs-reading/:path*"
+    },
+    {
+      "source": "/weather",
+      "destination": "https://react-nestjs-demo.vercel.app/weather"
+    },
+    {
+      "source": "/weather/:path*",
+      "destination": "https://react-nestjs-demo.vercel.app/weather/:path*"
     }
   ]
 }
