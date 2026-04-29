@@ -34,11 +34,11 @@
     },
     {
       "source": "/weather",
-      "destination": "https://react-nestjs-demo.vercel.app/weather"
+      "destination": "https://weather-rouge-five.vercel.app/weather"
     },
     {
       "source": "/weather/:path*",
-      "destination": "https://react-nestjs-demo.vercel.app/weather/:path*"
+      "destination": "https://weather-rouge-five.vercel.app/weather/:path*"
     }
   ]
 }
