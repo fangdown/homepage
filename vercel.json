@@ -39,6 +39,14 @@
     {
       "source": "/weather/:path*",
       "destination": "https://weather-rouge-five.vercel.app/weather/:path*"
+    },
+    {
+      "source": "/python-rga",
+      "destination": "https://python-rga-demo.vercel.app/python-rga"
+    },
+    {
+      "source": "/python-rga/:path*",
+      "destination": "https://python-rga-demo.vercel.app/python-rga/:path*"
     }
   ]
 }
