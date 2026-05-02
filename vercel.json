@@ -55,6 +55,14 @@
     {
       "source": "/exam/:path*",
       "destination": "https://codex-ks-demo.vercel.app/exam/:path*"
+    },
+    {
+      "source": "/codex-weather",
+      "destination": "https://codex-weather-khaki.vercel.app/codex-weather"
+    },
+    {
+      "source": "/codex-weather/:path*",
+      "destination": "https://codex-weather-khaki.vercel.app/codex-weather/:path*"
     }
   ]
 }
