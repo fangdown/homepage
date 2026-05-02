@@ -47,6 +47,14 @@
     {
       "source": "/python-rga/:path*",
       "destination": "https://python-rga-demo.vercel.app/python-rga/:path*"
+    },
+    {
+      "source": "/exam",
+      "destination": "https://codex-ks-demo.vercel.app/exam"
+    },
+    {
+      "source": "/exam/:path*",
+      "destination": "https://codex-ks-demo.vercel.app/exam/:path*"
     }
   ]
 }
