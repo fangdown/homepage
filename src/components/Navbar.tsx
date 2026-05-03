@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { MenuIcon, XIcon, GithubIcon, GoogleIcon } from "./Icons";
 import { signInWithGoogle, signOut, onAuthStateChange, getCurrentUser, User } from "@/lib/auth";
 
@@ -13,8 +12,6 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-  const pathname = usePathname();
-  const isAdmin = pathname?.startsWith("/admin") ?? false;
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState<User | null>(null);
@@ -59,20 +56,12 @@ export default function Navbar() {
     }
   }
 
-  const headerShell = isAdmin
-    ? scrolled
-      ? "bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm"
-      : "bg-white border-b border-gray-200"
-    : scrolled
-      ? "bg-background/90 backdrop-blur-md border-b border-border/50"
-      : "bg-transparent border-b border-transparent";
+  const headerShell = scrolled
+    ? "bg-background/90 backdrop-blur-md border-b border-border/50"
+    : "bg-transparent border-b border-transparent";
 
-  const linkMuted = isAdmin
-    ? "text-gray-600 hover:text-gray-900 transition-colors duration-200"
-    : "text-foreground/80 hover:text-gold transition-colors duration-200";
-  const linkQuiet = isAdmin
-    ? "text-gray-500 hover:text-gray-800 transition-colors"
-    : "text-foreground/50 hover:text-foreground/80 transition-colors";
+  const linkMuted = "text-foreground/80 hover:text-gold transition-colors duration-200";
+  const linkQuiet = "text-foreground/50 hover:text-foreground/80 transition-colors";
 
   return (
     <header
@@ -83,11 +72,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link
             href="/"
-            className={
-              isAdmin
-                ? "text-xl font-bold text-gray-900 hover:text-gray-600 transition-colors"
-                : "text-xl font-bold text-gold hover:opacity-80 transition-opacity"
-            }
+            className="text-xl font-bold text-gold hover:opacity-80 transition-opacity"
           >
             Fangdu
           </Link>
@@ -122,13 +107,9 @@ export default function Navbar() {
                   alt={user.name || "User"}
                   width={32}
                   height={32}
-                  className={
-                    isAdmin
-                      ? "h-8 w-8 rounded-full border border-gray-200 object-cover"
-                      : "h-8 w-8 rounded-full border border-border object-cover"
-                  }
+                  className="h-8 w-8 rounded-full border border-border object-cover"
                 />
-                <span className={isAdmin ? "text-sm text-gray-700" : "text-sm text-foreground/80"}>
+                <span className="text-sm text-foreground/80">
                   {user.name || user.email}
                 </span>
                 <button
@@ -152,11 +133,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={
-              isAdmin
-                ? "md:hidden text-gray-700 hover:text-gray-900 transition-colors"
-                : "md:hidden text-foreground hover:text-gold transition-colors"
-            }
+            className="md:hidden text-foreground hover:text-gold transition-colors"
             aria-label="Toggle menu"
           >
             {isOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
@@ -165,13 +142,7 @@ export default function Navbar() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div
-            className={
-              isAdmin
-                ? "md:hidden mt-4 pb-4 border-t border-gray-200 pt-4"
-                : "md:hidden mt-4 pb-4 border-t border-border pt-4"
-            }
-          >
+          <div className="md:hidden mt-4 pb-4 border-t border-border pt-4">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <Link
@@ -197,32 +168,16 @@ export default function Navbar() {
               {isLoading ? (
                 <div className="w-8 h-8" />
               ) : user ? (
-                <div
-                  className={
-                    isAdmin
-                      ? "flex items-center gap-3 pt-4 border-t border-gray-200"
-                      : "flex items-center gap-3 pt-4 border-t border-border"
-                  }
-                >
+                <div className="flex items-center gap-3 pt-4 border-t border-border">
                   <Image
                     src={user.avatar_url || "https://www.gravatar.com/avatar/?d=mp"}
                     alt={user.name || "User"}
                     width={40}
                     height={40}
-                    className={
-                      isAdmin
-                        ? "h-10 w-10 rounded-full border border-gray-200 object-cover"
-                        : "h-10 w-10 rounded-full border border-border object-cover"
-                    }
+                    className="h-10 w-10 rounded-full border border-border object-cover"
                   />
                   <div className="flex-1">
-                    <p
-                      className={
-                        isAdmin
-                          ? "text-sm font-medium text-gray-900"
-                          : "text-sm font-medium text-foreground"
-                      }
-                    >
+                    <p className="text-sm font-medium text-foreground">
                       {user.name || user.email}
                     </p>
                     <button
@@ -236,11 +191,7 @@ export default function Navbar() {
               ) : (
                 <button
                   onClick={handleSignIn}
-                  className={
-                    isAdmin
-                      ? "flex items-center gap-2 px-4 py-2 bg-gray-50 text-gray-800 rounded-full border border-gray-200 hover:bg-gray-100 transition-colors text-sm font-medium mt-4 pt-4 border-t border-gray-200"
-                      : "flex items-center gap-2 px-4 py-2 bg-white text-gray-700 rounded-full border border-gray-200 hover:bg-gray-50 transition-colors text-sm font-medium mt-4 pt-4 border-t border-border"
-                  }
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-gray-700 rounded-full border border-gray-200 hover:bg-gray-50 transition-colors text-sm font-medium mt-4 pt-4 border-t border-border"
                 >
                   <GoogleIcon size={18} />
                   使用 Google 登录

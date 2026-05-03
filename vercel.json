@@ -63,6 +63,14 @@
     {
       "source": "/codex-weather/:path*",
       "destination": "https://codex-weather-khaki.vercel.app/codex-weather/:path*"
+    },
+    {
+      "source": "/admin",
+      "destination": "https://admin-phi-topaz-98.vercel.app/admin"
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "https://admin-phi-topaz-98.vercel.app/admin/:path*"
     }
   ]
 }

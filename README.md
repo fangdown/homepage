@@ -11,11 +11,10 @@
 | 模块 | 说明 |
 |------|------|
 | **首页** | Hero、作品区；数据来自 Supabase `projects`（失败时有占位与重试提示）。 |
-| **动态背景** | 矩阵雨 + 赛博网格；在 **`/admin` 管理路径下自动关闭**，主区域白底以便阅读。 |
+| **动态背景** | 矩阵雨 + 赛博网格，覆盖首页与课程页的视觉氛围。 |
 | **Courses** | 课程列表（`courses` 表），卡片展示价格与购买入口。 |
 | **支付** | 创建订单 → 跳转 Z-Pay；**异步通知** `POST/GET /api/pay/zpay/notify` 更新订单为已支付；浏览器同步跳转 `/pay/return`。 |
 | **认证** | Google 登录（Supabase Auth），`/auth/callback` 交换 session。 |
-| **管理入口 `/admin`** | 旧后台已迁移到独立 Fangdu Admin；当前路径只展示迁移提示和统一后台入口。 |
 
 ---
 
@@ -40,12 +39,11 @@ src/
 │   ├── globals.css
 │   ├── actions.ts           # Server Actions（首页作品读取等）
 │   ├── courses/page.tsx     # 课程页
-│   ├── admin/               # 旧后台迁移提示页
 │   ├── auth/callback/       # OAuth 回调
 │   ├── pay/return/          # 支付完成说明页
 │   └── api/pay/zpay/        # create（下单跳转） / notify（异步通知）
 ├── components/
-│   ├── AppChrome.tsx        # 客户端：/admin 关闭矩阵背景、主区白底与顶栏留白
+│   ├── AppChrome.tsx        # 客户端：背景、导航、页脚外壳
 │   ├── Navbar.tsx / Footer.tsx / Background.tsx / …
 │   ├── courses/             # 课程卡片、下单弹窗、矩阵背景等
 ├── lib/
@@ -89,7 +87,6 @@ npm test         # Vitest
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase 项目 URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | 匿名密钥（浏览器可用） |
 | `SUPABASE_SERVICE_ROLE_KEY` | **服务角色**密钥（仅服务端；订单与支付逻辑需要） |
-| `NEXT_PUBLIC_ADMIN_URL` | 可选，`/admin` 迁移提示页的统一后台入口，默认 `http://localhost:5174/` |
 | `NEXT_PUBLIC_SITE_URL` | **生产强烈建议设置**，例如 `https://www.fangdu.chat`；用于生成 Z-Pay `notify_url` / `return_url`，须与浏览器实际访问域名一致 |
 | `ZPAY_PID` / `ZPAY_KEY` | Z-Pay 商户 PID 与密钥 |
 | `ZPAY_GATEWAY` | 可选，默认 `https://zpayz.cn` |
