@@ -1,6 +1,6 @@
 # Fangdu · Homepage
 
-个人开发者主页与轻量商业化站点：**作品展示**、**课程/产品页**、**Z-Pay（易支付兼容）收款**、**Supabase 账号**与**密码管理后台**。技术栈为 **Next.js 16（App Router）**、**React 19**、**Tailwind CSS 4**、**Supabase**。
+个人开发者主页与轻量商业化站点：**作品展示**、**课程/产品页**、**Z-Pay（易支付兼容）收款**与**Supabase 账号**。技术栈为 **Next.js 16（App Router）**、**React 19**、**Tailwind CSS 4**、**Supabase**。
 
 线上示例域名：**fangdu.chat**（部署时请把环境变量里的站点 URL 与 Supabase 回调配置为实际域名，含 `www` 若使用子域）。
 
@@ -15,7 +15,7 @@
 | **Courses** | 课程列表（`courses` 表），卡片展示价格与购买入口。 |
 | **支付** | 创建订单 → 跳转 Z-Pay；**异步通知** `POST/GET /api/pay/zpay/notify` 更新订单为已支付；浏览器同步跳转 `/pay/return`。 |
 | **认证** | Google 登录（Supabase Auth），`/auth/callback` 交换 session。 |
-| **管理后台 `/admin`** | 密码由环境变量 `ADMIN_PASSWORD` 校验（**仅通过 Server Action**，勿在客户端直接读密钥）；作品 / 课程 CRUD、订单列表（自动刷新）。 |
+| **管理入口 `/admin`** | 旧后台已迁移到独立 Fangdu Admin；当前路径只展示迁移提示和统一后台入口。 |
 
 ---
 
@@ -38,9 +38,9 @@ src/
 │   ├── layout.tsx           # 根布局：AppChrome（背景/导航/页脚按路由切换）
 │   ├── page.tsx             # 首页
 │   ├── globals.css
-│   ├── actions.ts           # Server Actions（作品/课程/订单/管理登录）
+│   ├── actions.ts           # Server Actions（首页作品读取等）
 │   ├── courses/page.tsx     # 课程页
-│   ├── admin/               # 管理后台（独立 layout + admin.css）
+│   ├── admin/               # 旧后台迁移提示页
 │   ├── auth/callback/       # OAuth 回调
 │   ├── pay/return/          # 支付完成说明页
 │   └── api/pay/zpay/        # create（下单跳转） / notify（异步通知）
@@ -48,7 +48,6 @@ src/
 │   ├── AppChrome.tsx        # 客户端：/admin 关闭矩阵背景、主区白底与顶栏留白
 │   ├── Navbar.tsx / Footer.tsx / Background.tsx / …
 │   ├── courses/             # 课程卡片、下单弹窗、矩阵背景等
-│   └── admin/               # 管理端面板
 ├── lib/
 │   ├── admin/               # projects、courses、orders、auth
 │   ├── zpay/                # 签名、拼单、网关配置
@@ -89,8 +88,8 @@ npm test         # Vitest
 |------|------|
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase 项目 URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | 匿名密钥（浏览器可用） |
-| `SUPABASE_SERVICE_ROLE_KEY` | **服务角色**密钥（仅服务端；管理写库、订单、支付逻辑） |
-| `ADMIN_PASSWORD` | 管理后台登录密码（仅服务端校验） |
+| `SUPABASE_SERVICE_ROLE_KEY` | **服务角色**密钥（仅服务端；订单与支付逻辑需要） |
+| `NEXT_PUBLIC_ADMIN_URL` | 可选，`/admin` 迁移提示页的统一后台入口，默认 `http://localhost:5174/` |
 | `NEXT_PUBLIC_SITE_URL` | **生产强烈建议设置**，例如 `https://www.fangdu.chat`；用于生成 Z-Pay `notify_url` / `return_url`，须与浏览器实际访问域名一致 |
 | `ZPAY_PID` / `ZPAY_KEY` | Z-Pay 商户 PID 与密钥 |
 | `ZPAY_GATEWAY` | 可选，默认 `https://zpayz.cn` |
@@ -112,6 +111,9 @@ npm test         # Vitest
 
 具体 RLS 与 service role 策略以迁移文件为准。
 
+作品、课程和订单的后台管理已迁移到独立 `admin` 项目，并通过 `nodejs-api`
+的 `/v1/admin/homepage/*` 接口写入本项目 Supabase。
+
 ---
 
 ## 支付与订单
@@ -124,7 +126,7 @@ npm test         # Vitest
 
 ## 安全与部署提示
 
-- 管理密码、Service Role、Z-Pay 密钥仅保存在服务端环境变量。  
+- Service Role、Z-Pay 密钥仅保存在服务端环境变量。
 - 生产环境建议开启 **HTTPS**，并配置 `next.config.ts` 中已有基础安全响应头。  
 - `next/image` 已为 Google 头像与 Gravatar 配置 `images.remotePatterns`（见 `next.config.ts`）。
 
