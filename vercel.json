@@ -74,7 +74,11 @@
     },
     {
       "source": "/tomato-farm-pwa",
-      "destination": "https://tomato-farm-pwa-five.vercel.app/tomato-farm-pwa"
+      "destination": "https://tomato-farm-pwa-five.vercel.app/tomato-farm-pwa/"
+    },
+    {
+      "source": "/tomato-farm-pwa/",
+      "destination": "https://tomato-farm-pwa-five.vercel.app/tomato-farm-pwa/"
     },
     {
       "source": "/tomato-farm-pwa/:path*",
