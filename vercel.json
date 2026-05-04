@@ -71,6 +71,14 @@
     {
       "source": "/admin/:path*",
       "destination": "https://admin-phi-topaz-98.vercel.app/admin/:path*"
+    },
+    {
+      "source": "/tomato-farm-pwa",
+      "destination": "https://tomato-farm-pwa-five.vercel.app/tomato-farm-pwa"
+    },
+    {
+      "source": "/tomato-farm-pwa/:path*",
+      "destination": "https://tomato-farm-pwa-five.vercel.app/tomato-farm-pwa/:path*"
     }
   ]
 }
