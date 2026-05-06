@@ -83,6 +83,14 @@
     {
       "source": "/tomato-farm-pwa/:path*",
       "destination": "https://tomato-farm-pwa-five.vercel.app/tomato-farm-pwa/:path*"
+    },
+    {
+      "source": "/flight-cs",
+      "destination": "http://120.79.246.235/flight-cs"
+    },
+    {
+      "source": "/flight-cs/:path*",
+      "destination": "http://120.79.246.235/flight-cs/:path*"
     }
   ]
 }
