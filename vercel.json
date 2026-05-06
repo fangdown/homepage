@@ -86,11 +86,11 @@
     },
     {
       "source": "/flight-cs",
-      "destination": "http://120.79.246.235/flight-cs"
+      "destination": "https://api.fangdown.cn/flight-cs"
     },
     {
       "source": "/flight-cs/:path*",
-      "destination": "http://120.79.246.235/flight-cs/:path*"
+      "destination": "https://api.fangdown.cn/flight-cs/:path*"
     }
   ]
 }
