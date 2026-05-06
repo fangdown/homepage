@@ -85,8 +85,8 @@
       "destination": "https://tomato-farm-pwa-five.vercel.app/tomato-farm-pwa/:path*"
     },
     {
-      "source": "/flight-cs",
-      "destination": "https://api.fangdown.cn/flight-cs"
+      "source": "/flight-cs/",
+      "destination": "https://api.fangdown.cn/flight-cs/"
     },
     {
       "source": "/flight-cs/:path*",
