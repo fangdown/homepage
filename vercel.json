@@ -94,11 +94,11 @@
     },
     {
       "source": "/ai-pet/",
-      "destination": "https://api.fangdown.cn/ai-pet/"
+      "destination": "https://ai-pet-mu.vercel.app/ai-pet/"
     },
     {
       "source": "/ai-pet/:path*",
-      "destination": "https://api.fangdown.cn/ai-pet/:path*"
+      "destination": "https://ai-pet-mu.vercel.app/ai-pet/:path*"
     }
   ]
 }
