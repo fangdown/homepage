@@ -93,12 +93,12 @@
       "destination": "https://api.fangdown.cn/flight-cs/:path*"
     },
     {
-      "source": "/ai-pet/api/:path*",
-      "destination": "https://www.fangdu.chat/ai-pet/api/:path*"
+      "source": "/ai-pet",
+      "destination": "https://ai-pet-mu.vercel.app/ai-pet"
     },
     {
       "source": "/ai-pet/",
-      "destination": "https://ai-pet-mu.vercel.app/ai-pet/"
+      "destination": "https://ai-pet-mu.vercel.app/ai-pet"
     },
     {
       "source": "/ai-pet/:path*",
